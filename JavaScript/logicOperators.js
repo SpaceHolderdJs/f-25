@@ -111,17 +111,21 @@
 // ==
 // ===
 
-console.log(null == undefined);
-console.log(null === undefined);
+// console.log(null == undefined);
+// console.log(null === undefined);
 
-console.log(null == 0);
-console.log(null === 0);
-console.log(null > 0);
-console.log(null < 0);
-console.log(null >= 0);
-console.log(null <= 0);
-console.log(null !== 0);
+// console.log(null == 0);
+// console.log(null === 0);
+// console.log(null > 0);
+// console.log(null < 0);
+// console.log(null >= 0);
+// console.log(null <= 0);
+// console.log(null !== 0);
 
 
 // const number = +prompt("Enter number") || 0;
 
+const n1 = prompt("Enter number1");
+const n2 = prompt("Enter number2");
+
+let res;
