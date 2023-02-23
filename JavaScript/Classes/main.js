@@ -50,104 +50,158 @@
 
 // написати свій класс Car з трьома аргументами та додати до класу метод що виводить про нього інформацію та створити екземпляр класу, використати метод  
 
-class Ford {
+// class Ford {
 
-    static isFord (car) {
-        return car instanceof Ford
-    }
+//     static isFord (car) {
+//         return car instanceof Ford
+//     }
 
-    static keys (car) {
-        const result = [];
+//     static keys (car) {
+//         const result = [];
 
-        for (let key in car) {
-            result[result.length] = key;
-        }
+//         for (let key in car) {
+//             result[result.length] = key;
+//         }
 
-        return result;
-    }
+//         return result;
+//     }
 
-    constructor (price, color, model, speed) {
-        this.price = price;
-        this.color = color;
-        this.model = model;
-        this.speed = speed;
+//     constructor (price, color, model, speed) {
+//         this.price = price;
+//         this.color = color;
+//         this.model = model;
+//         this.speed = speed;
 
-        return this;
-    }
+//         return this;
+//     }
 
-    info () {
-        console.table(this);
-    }
+//     info () {
+//         console.table(this);
+//     }
 
-    ride () {
-        console.log(`I am riding with speed ${this.speed}`);
-    }
-}
+//     ride () {
+//         console.log(`I am riding with speed ${this.speed}`);
+//     }
+// }
 
-class Mustang extends Ford {
-    constructor (price, color, model, speed, turbo) {
-        super(price, color, model, speed);
+// class Mustang extends Ford {
+//     constructor (price, color, model, speed, turbo) {
+//         super(price, color, model, speed);
 
-        this.turbo = turbo;
+//         this.turbo = turbo;
 
-        return this;
-    }
+//         return this;
+//     }
 
-    speedyRide () {
-        console.log(`I am riding speedy with speed ${this.speed}`);
-    }
-}
+//     speedyRide () {
+//         console.log(`I am riding speedy with speed ${this.speed}`);
+//     }
+// }
 
-const mondeo = new Ford(10000, "black", "mondeo", 200);
-mondeo.info();
-mondeo.ride();
+// const mondeo = new Ford(10000, "black", "mondeo", 200);
+// mondeo.info();
+// mondeo.ride();
 
-const mustang = new Mustang(50000, "blue", "mustang", 300, true);
-mustang.info();
-mustang.speedyRide();
+// const mustang = new Mustang(50000, "blue", "mustang", 300, true);
+// mustang.info();
+// mustang.speedyRide();
 
-class MustangGT extends Mustang {
-    constructor (price, color, model, speed, turbo, isGt) {
-        super(price, color, model, speed, turbo);
+// class MustangGT extends Mustang {
+//     constructor (price, color, model, speed, turbo, isGt) {
+//         super(price, color, model, speed, turbo);
 
-        this.isGt = isGt;
+//         this.isGt = isGt;
 
-        return this;
-    }
+//         return this;
+//     }
 
-    nitro () {
-        this.speed = this.speed + 50;
-        console.log(`I am using nitro with speed ${this.speed}`);
-    }
+//     nitro () {
+//         this.speed = this.speed + 50;
+//         console.log(`I am using nitro with speed ${this.speed}`);
+//     }
 
-    info () {
-        console.log(this, "THIS IS MUSTANG GT");
-    }
-}
+//     info () {
+//         console.log(this, "THIS IS MUSTANG GT");
+//     }
+// }
 
-const mustangGT = new MustangGT(70000, "red", "mustangGT", 400, true, true);
+// const mustangGT = new MustangGT(70000, "red", "mustangGT", 400, true, true);
 
-mustangGT.speedyRide();
-mustangGT.nitro();
-mustangGT.ride();
-mustangGT.info();
+// mustangGT.speedyRide();
+// mustangGT.nitro();
+// mustangGT.ride();
+// mustangGT.info();
 
-console.log(Ford.isFord({}), "isFord");
-console.log(Ford.keys(mustangGT), "keys of mustang gt");
-console.log(Object.keys(mustangGT), "default keys");
+// console.log(Ford.isFord({}), "isFord");
+// console.log(Ford.keys(mustangGT), "keys of mustang gt");
+// console.log(Object.keys(mustangGT), "default keys");
 
 
 // Створити класс з 2 праметрами та 2 методами, що змінюють кожен з параметрів
 
 
-Array.prototype.reduce2 = function (fn, acc = 0) {
+// Array.prototype.reduce2 = function (fn, acc = 0) {
     
-    for(let i = 0; i < this.length; i++) {
-       acc = fn(acc, this[i], i, this);
+//     for(let i = 0; i < this.length; i++) {
+//        acc = fn(acc, this[i], i, this);
+//     }
+
+//     return acc;
+// }
+
+// // console.log([1, 2, 3, 4].reduce2((acc, el) => acc = acc.push(el * 10), []), "reduce");
+// console.log([1, 2, 3, 4].reduce((acc, el, i) => acc[i] = (el * 10), []), "reduce original");
+
+// const fn = function (f1, f2) {
+// 	return {
+// 			result1: f1(),
+// 			result2: f2()
+//    }
+// }
+
+// const result = fn(() => "res1", () => "res2");
+
+// console.log(result, "!!!");
+
+// function fn (classToCheck, objectsArray) {
+//     return objectsArray.filter((object) => object instanceof classToCheck);
+// }
+
+// console.log(fn(Ford, [mustang, mustangGT, mondeo, {}, {name: "Hello"}]), "result !!!");
+
+class Person {
+
+    #age = Date.now();
+
+    constructor(name) {
+        this.name = name;
     }
 
-    return acc;
+    getDate (date) {
+        return date - this.#age;
+    }
+
+    get age () {
+        return this.#age;
+    } 
+
+    set age (newAge) {
+        this.#age = newAge;
+    }
+
 }
 
-// console.log([1, 2, 3, 4].reduce2((acc, el) => acc = acc.push(el * 10), []), "reduce");
-console.log([1, 2, 3, 4].reduce((acc, el, i) => acc[i] = (el * 10), []), "reduce original");
+const person = new Person("Igor", 23);
+
+// 
+person.age = 100; //setter
+person.age //getter
+
+person.name = "Oleg";
+
+console.log(person, "person");
+
+
+
+
+
