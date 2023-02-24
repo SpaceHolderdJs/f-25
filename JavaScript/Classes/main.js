@@ -199,9 +199,70 @@ person.age //getter
 
 person.name = "Oleg";
 
-console.log(person, "person");
+console.log(person, "person", window);
+
+// 1. Створити свій клас з приватним полем, написати гетер та сетер для цього поля, що дозволить з ним працювати
+
+// Array.prototype.showInfo = function () {
+//     console.table(this);
+// }
+
+// const arr = [1,2,3,4,5];
+
+// arr.showInfo();
 
 
+class SuperArray extends Array {
+    constructor (arr) {
+        super(arr);
+    }
+
+    showInfo () {
+        console.table(this);  
+    }
+
+    push (el) {
+        this[this.length] = el;
+        return this.flat();
+    }
+
+}
+
+const myArray = new SuperArray(["Hello", "World"]);
 
 
+console.log(myArray.push("Hey"), "array result");
+myArray.showInfo();
 
+// 2. Створити аналог класу Object з доданим методом copy. Метод має повертати нову незалежну копію вашого object
+
+
+class SuperObject extends Object {
+    constructor (obj) {
+        super(obj);
+
+        for (let key in obj) {
+            this[key] = obj[key];
+        }
+    }
+
+    copy () {
+        return {...this}
+    }
+}
+
+SuperObject.prototype.copy = function () {
+    return null;
+}
+
+const obj10 = new SuperObject({name: "Oleksandr", age: 100});
+
+const anotherObj = obj10.copy();
+obj10.name = "Igor";
+
+console.log(anotherObj, obj10, "log");
+
+
+Array.prototype.forEach = function () {
+    console.log(this, "!!!")
+}
