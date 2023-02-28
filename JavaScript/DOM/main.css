@@ -1,0 +1,23 @@
+body {
+    transition: 0.3s all;
+    background: grey;
+}
+
+h1 {
+    color: white;
+}
+
+button {
+    font-size: 30px;
+    border: none;
+}
+
+.square {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+}
+

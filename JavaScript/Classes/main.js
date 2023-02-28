@@ -226,13 +226,20 @@ class SuperArray extends Array {
         return this.flat();
     }
 
+    at (index) {
+        console.log(this, "this");
+        return {
+            element: this[0][index],
+            array: this
+        }
+    }
+
 }
 
 const myArray = new SuperArray(["Hello", "World"]);
 
 
-console.log(myArray.push("Hey"), "array result");
-myArray.showInfo();
+console.log(myArray.at(1), "element!!!!");
 
 // 2. Створити аналог класу Object з доданим методом copy. Метод має повертати нову незалежну копію вашого object
 
@@ -261,8 +268,3 @@ const anotherObj = obj10.copy();
 obj10.name = "Igor";
 
 console.log(anotherObj, obj10, "log");
-
-
-Array.prototype.forEach = function () {
-    console.log(this, "!!!")
-}
