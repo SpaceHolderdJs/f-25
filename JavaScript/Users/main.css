@@ -5,3 +5,11 @@ body {
 input, button {
     font-size: 25px;
 }
+
+.user-card {
+    border: 1px solid white;
+    color: white;
+    margin: 10px;
+    font-size: 20px;
+    padding: 10px;
+}
