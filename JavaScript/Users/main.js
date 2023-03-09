@@ -5,6 +5,7 @@ const createButton = document.querySelector("#create");
 const usersSection = document.querySelector("#users-section");
 const searchInput = document.querySelector("#search");
 const sortingByNameCheckbox = document.querySelector("#sort-by-name");
+const sortingByAgeCheckbox = document.querySelector("#sort-by-age");
 
 let users = [
   { name: "Igor", city: "Kyiv", age: 20 },
@@ -36,6 +37,11 @@ const sorting = {
        const usersCopy = [...users]; 
        usersCopy.sort((user1, user2) => user1.name.localeCompare(user2.name));
        renderUsers(usersCopy);
+    },
+    ages: () => {
+      const usersCopy = [...users]; 
+      usersCopy.sort((user1, user2) => +user1.age - +user2.age);
+      renderUsers(usersCopy);
     }
 };
 
@@ -74,6 +80,10 @@ createButton.onclick = () => {
   const age = +ageInput.value;
   const city = cityInput.value;
 
+  if (!name || !age || !city) {
+   return alert("Please enter all required data");
+  }
+
   if (changingUser) {
    
     users[changingUser.index] = {
@@ -111,8 +121,28 @@ searchInput.oninput = (event) => {
 sortingByNameCheckbox.onchange = (event) => {
     if (event.target.checked) {
         sorting.names();
+        sortingByAgeCheckbox.checked = false;
     } else {
         renderUsers(users);
     }
 }
 
+sortingByAgeCheckbox.onchange = (event) => {
+  if (event.target.checked) {
+      sorting.ages();
+      sortingByNameCheckbox.checked = false;
+  } else {
+      renderUsers(users);
+  }
+}
+
+
+// document.body.addEventListener("click", () => {
+//   alert("Hello");
+// });
+
+document.body.onclick = () => {
+  alert("Hello");
+}
+
+document.body.onclick = () => {};
