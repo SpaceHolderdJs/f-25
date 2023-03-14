@@ -18,17 +18,18 @@ let users = [
   { name: "Igor", city: "Kyiv2", age: 20 },
   { name: "Alex", city: "Kyiv", age: 50 },
   { name: "Oleg", city: "Kyiv", age: 10 },
+  { name: "Oleg", city: "Kyiv", age: 10 },
+  { name: "Igor", city: "Kyiv1", age: 20 },
 ];
 
 let changingUser = undefined;
 let paginationpageNumber = 0;
 
-renderUsers(users);
-renderPagination(users.length);
+renderUsers();
 
 const deleteUser = (indexOfUser) => {
   users = users.filter((el, i) => i !== indexOfUser);
-  renderUsers(users);
+  renderUsers();
 };
 
 const editUser = (indexOfUser) => {
@@ -42,18 +43,18 @@ const editUser = (indexOfUser) => {
 };
 
 function renderPagination (usersQuantity) {
+  paginationSection.innerHTML = "";
+
   for ( let i = 0; i < usersQuantity / 3; i++ ) {
     const button = document.createElement("button");
     button.textContent = i;
     button.onclick = () => {
       paginationpageNumber = i;
       const groupedUsers = groupElementsOfArray(users, 3);
-      renderUsers(groupedUsers[i]);
+      renderUsers();
     }
     paginationSection.appendChild(button);
   }
-  //render first 3 users permanentely 
-  renderUsers(groupElementsOfArray(users, 3)[0]);
 };
 
 const sorting = {
@@ -69,7 +70,9 @@ const sorting = {
     }
 };
 
-function renderUsers(usersToRender) {
+function renderUsers(usersToRender = groupElementsOfArray(users, 3)[paginationpageNumber]) {
+  renderPagination(users.length);
+
   usersSection.innerHTML = "";
 
   const usersContent = usersToRender.map(
@@ -128,10 +131,12 @@ createButton.onclick = () => {
   ageInput.value = "";
   cityInput.value = "";
 
-  renderUsers(users);
+  renderUsers();
 };
 
 searchInput.oninput = (event) => {
+  if (!event.target.value) return renderUsers();
+
   const usersToRender = users.filter(({ name, age, city }) =>
     [name, age.toString(), city].some((element) =>
       element.includes(event.target.value)
