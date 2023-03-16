@@ -9,31 +9,45 @@ const sortingByAgeCheckbox = document.querySelector("#sort-by-age");
 const paginationSection = document.querySelector("#pagination");
 
 let users = [
-  { name: "Igor", city: "Kyiv", age: 20 },
-  { name: "Alex", city: "Kyiv", age: 50 },
-  { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Igor", city: "Kyiv1", age: 20 },
-  { name: "Alex", city: "Kyiv", age: 50 },
-  { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Igor", city: "Kyiv2", age: 20 },
-  { name: "Alex", city: "Kyiv", age: 50 },
-  { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Oleg", city: "Kyiv", age: 10 },
-  { name: "Igor", city: "Kyiv1", age: 20 },
+  { id: generateId(), name: "Igor", city: "Kyiv", age: 20 },
+  { id: generateId(), name: "Alex", city: "Kyiv", age: 50 },
+  { id: generateId(), name: "Oleg", city: "Kyiv", age: 10 },
+  { id: generateId(), name: "Igor", city: "Kyiv1", age: 20 },
+  { id: generateId(), name: "Alex", city: "Kyiv", age: 50 },
+  { id: generateId(), name: "Oleg", city: "Kyiv", age: 10 },
+  { id: generateId(), name: "Igor", city: "Kyiv2", age: 20 },
+  { id: generateId(), name: "Alex", city: "Kyiv", age: 50 },
+  { id: generateId(), name: "Oleg", city: "Kyiv", age: 10 },
+  { id: generateId(), name: "Oleg", city: "Kyiv", age: 10 },
+  { id: generateId(), name: "Igor", city: "Kyiv1", age: 20 },
 ];
+
+function generateId (length = 10) {
+  let id = "";
+  const symbols = "0123456789mnbvcxzlkjhgfdsapoiuytrewq";
+
+  for (let i = 0; i < length; i++) {
+    id += symbols[Math.floor(Math.random() * symbols.length )]
+  }
+  
+  return id;
+}
 
 let changingUser = undefined;
 let paginationpageNumber = 0;
 
 renderUsers();
 
-const deleteUser = (indexOfUser) => {
-  users = users.filter((el, i) => i !== indexOfUser);
+const deleteUser = (userId) => {
+  users = users.filter((user) => user.id !== userId);
   renderUsers();
 };
 
-const editUser = (indexOfUser) => {
-  changingUser = {data: users[indexOfUser], index: indexOfUser};
+const editUser = (userId) => {
+  const userToEdit = users.find((user) => user.id === userId);
+  const indexOfEditingUser = users.findIndex((user) => user.id === userId)
+
+  changingUser = {data: userToEdit, index: indexOfEditingUser};
 
   createButton.textContent = "Save changes";
 
@@ -80,8 +94,8 @@ function renderUsers(usersToRender = groupElementsOfArray(users, 3)[paginationpa
         <p>${user.name}</p>
         <p>${user.city}</p>
         <span>${user.age}</span>
-        <button class="delete-user-button">Delete</button>
-        <button class="edit-user-button">Edit</button>
+        <button class="delete-user-button" id="${user.id}">Delete</button>
+        <button class="edit-user-button" id="${user.id}">Edit</button>
     </div>`
   );
 
@@ -91,14 +105,14 @@ function renderUsers(usersToRender = groupElementsOfArray(users, 3)[paginationpa
 
   const deleteButtons = [...document.querySelectorAll(".delete-user-button")];
 
-  deleteButtons.forEach((button, i) => {
-    button.onclick = () => deleteUser(i);
+  deleteButtons.forEach((button) => {
+    button.onclick = () => deleteUser(button.id);
   });
 
   const editButtons = [...document.querySelectorAll(".edit-user-button")];
 
-  editButtons.forEach((button, i) => {
-    button.onclick = () => editUser(i);
+  editButtons.forEach((button) => {
+    button.onclick = () => editUser(button.id);
   });
 }
 
@@ -114,15 +128,16 @@ createButton.onclick = () => {
   if (changingUser) {
    
     users[changingUser.index] = {
+        ...users[changingUser.index],
         name: name,
         age: age,
-        city: city
+        city: city,
     };
 
     changingUser = undefined;
     createButton.textContent = "Create User";
   } else {
-    const user = { name: name, age: age, city: city };
+    const user = { id: generateId(), name: name, age: age, city: city };
 
     users.push(user);
   }
@@ -152,7 +167,7 @@ sortingByNameCheckbox.onchange = (event) => {
         sorting.names();
         sortingByAgeCheckbox.checked = false;
     } else {
-        renderUsers(users);
+        renderUsers();
     }
 }
 
@@ -161,7 +176,7 @@ sortingByAgeCheckbox.onchange = (event) => {
       sorting.ages();
       sortingByNameCheckbox.checked = false;
   } else {
-      renderUsers(users);
+      renderUsers();
   }
 }
 
