@@ -90,6 +90,7 @@ const submitBtn = document.querySelector("#submit");
 
 const userEmailOutput = document.querySelector("#user-email"); 
 const userPasswordOutput = document.querySelector("#user-password"); 
+const logoutButton = document.querySelector("#logout");
 
 let user = localStorage.getItem("user")
 ? JSON.parse(localStorage.getItem("user"))
@@ -100,7 +101,6 @@ if (user) {
     userEmailOutput.textContent = email;
     userPasswordOutput.textContent = password;
 }
-
 
 submitBtn.onclick = () => {
     const email =  emailField.value;
@@ -117,3 +117,22 @@ submitBtn.onclick = () => {
     localStorage.setItem("user", JSON.stringify(user));
 }
 
+logoutButton.onclick = () => {
+    user = undefined;
+    localStorage.setItem("user", "");
+
+    userEmailOutput.textContent = "";
+    userPasswordOutput.textContent = "";
+}
+
+// -----------
+
+const form = document.getElementById("form");
+console.log(form, "form", form.dataset);
+
+form.onsubmit = (event) => {
+    event.preventDefault();
+    console.log(event.target.dataset, "target");
+}
+
+console.log(document.forms[1], "forms!!!");
