@@ -10,6 +10,8 @@ const API_KEY = `6409ee75b6ffc020adb31a565296a4bb`;
 const errorStatuses = ["404", 401, "400"];
 let isLoading = false;
 
+const prevRequests = [];
+
 const lastRequestData = localStorage.getItem("weather-data")
   ? JSON.parse(localStorage.getItem("weather-data"))
   : undefined;
@@ -37,6 +39,8 @@ function getWeather(city) {
 
       localStorage.setItem("city", city);
       localStorage.setItem("weather-data", JSON.stringify(response));
+      prevRequests.push(response);
+      console.log(prevRequests, "prevRequests");
 
       renderWeather(response);
     })
@@ -75,6 +79,6 @@ function renderWeather(data) {
         <h3>Wind</h3>
         <span>Speed: ${speed}</span>
         <span>Direction: ${deg}</span>
-        <span>Gust: ${gust}</span>
+        <span>Gust: ${gust || "Not available"}</span>
     `;
 }

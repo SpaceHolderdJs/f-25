@@ -1,0 +1,14 @@
+
+body * {
+    font-size: 30px;
+}
+
+.todo {
+    border: 1px solid black;
+    margin: 5px 0;
+    transition: 0.3s all;
+}
+
+.done {
+    opacity: 0.5;
+}
