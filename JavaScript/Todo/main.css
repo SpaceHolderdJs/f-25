@@ -25,3 +25,11 @@ body * {
     margin: 5px;
     background: grey;
 }
+
+.active-user-button {
+    background: lightskyblue;
+}
+
+input {
+    margin: 5px;
+}
