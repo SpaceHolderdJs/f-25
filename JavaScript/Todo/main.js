@@ -4,6 +4,8 @@ const output = document.querySelector("#output");
 const usersOutput = document.querySelector("#users-output");
 const clearCurrentUserButton = document.querySelector("#clear-current-user");
 const searchTodoInput = document.querySelector("#todo-search");
+const scrollTopButton = document.querySelector("#scroll-top-button");
+const clearInputButton = document.querySelector("#clear-todo-search");
 
 const isLocalStorageTodosExists = localStorage.getItem("todos");
 
@@ -38,39 +40,39 @@ function renderTodos(todosToRender) {
             <div class="todo ${todo.done && "done"}">
                 <div>
                     <span>${i + 1}.</span>
-                    <input type="checkbox" ${
+                    <input id="${todo.id}" type="checkbox" ${
                       todo.done && "checked"
                     } class="todo-checkbox" />
                     <span>${todo.text}</span>
                 </div>
-                <button class="delete-todo">Delete</button>
+                <button id="${todo.id}" class="delete-todo">Delete</button>
             </div>
         `;
   });
 
   const checkboxes = [...document.querySelectorAll(".todo-checkbox")];
 
-  checkboxes.forEach((checkbox, i) => {
+  checkboxes.forEach((checkbox) => {
     checkbox.onchange = () => {
-      const todo = todos[i];
-      changeTodo(todo.text, !todo.done);
+      const todo = todos.find((todo) => todo.id === +checkbox.id);
+      changeTodo(todo.id, !todo.done);
     };
   });
 
   const deleteButtons = [...document.querySelectorAll(".delete-todo")];
 
-  deleteButtons.forEach((button, i) => {
+  deleteButtons.forEach((button) => {
     button.onclick = () => {
-      const todo = todos[i];
+      const todo = todos.find((todo) => todo.id === +button.id);
       deleteTodo(todo.text);
     };
   });
 }
 
-function changeTodo(text, newDone) {
+function changeTodo(id, newDone) {
   todos = todos.map((todo) => {
-    if (text === todo.text) {
-      return { text, done: newDone };
+    if (todo.id === id) {
+      return { ...todo, done: newDone };
     }
     return todo;
   });
@@ -82,6 +84,7 @@ function changeTodo(text, newDone) {
 
 function deleteTodo(text) {
   todos = todos.filter((todo) => todo.text !== text);
+  console.log(todos, "changed todos");
   renderTodos(
     currentUser ? todos.filter((todo) => todo.userId === currentUser.id) : todos
   );
@@ -165,6 +168,10 @@ clearCurrentUserButton.disabled = true;
 clearCurrentUserButton.onclick = () => {
   currentUser = undefined;
   clearCurrentUserButton.disabled = true;
+
+  const userButtons = [...document.querySelectorAll(".user-todos-button")];
+  userButtons.forEach((btn) => btn.classList.remove("active-user-button"));
+
   renderTodos(todos);
 };
 
@@ -172,3 +179,14 @@ searchTodoInput.oninput = () => {
   console.log(searchTodoInput.value);
   searchTodo(searchTodoInput.value);
 };
+
+scrollTopButton.onclick = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+clearInputButton.onclick = () => {
+  searchTodoInput.value = "";
+  const todosToRender = currentUser ? todos.filter((todo) => todo.userId === currentUser.id) : todos;
+  renderTodos(todosToRender);
+}
+
