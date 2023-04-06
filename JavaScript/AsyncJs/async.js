@@ -74,19 +74,32 @@ const createPost = (post) => {
 };
 
 const updatePost = (post) => {
-  fetch("https://jsonplaceholder.typicode.com/posts/7", {
+  return fetch("https://jsonplaceholder.typicode.com/posts/7", {
     method: "PATCH",
     body: JSON.stringify(post),
   })
     .then((response) => response.json())
-    .then((data) => console.log("DATA after PATCH", data));
+    .then((data) => {
+      console.log("DATA after PATCH", data);
+      return data;
+    });
+};
+
+const deletePost = (postId) => {
+  return fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.status)
+    .then((data) => console.log("DELETED DATA", data));
 };
 
 createPost({ title: "title", body: "text", userId: 0 }).then((data) =>
   console.log("I have data from innered then", data)
 );
 
-updatePost({ title: "title", body: "text", userId: 1, id: 7});
+updatePost({ title: "title", body: "text", userId: 1, id: 7 });
+
+deletePost(1);
 
 //Requests -> Response
 
