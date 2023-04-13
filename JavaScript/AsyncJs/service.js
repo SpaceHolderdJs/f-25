@@ -25,10 +25,11 @@ class Service {
     return payload;
   }
 
-  async patchRequest(id, data) {
+  async patchRequest(id, data, method = "PATCH") {
+    console.log(method, "METHOD");
     const response = await fetch(`${this.url}/${id}`, {
       headers: Service.headers,
-      method: "PATCH",
+      method,
       body: JSON.stringify(data),
     });
 
@@ -73,18 +74,18 @@ class Service {
 //   }
 // }
 
-// const userService = new Service("https://jsonplaceholder.typicode.com/users");
+const userService = new Service("https://jsonplaceholder.typicode.com/users");
 
-// userService.getRequest().then((data) => console.log(data, "users"));
-// userService
-//   .postRequest({ title: "title", body: "string", userId: 0 })
-//   .then((data) => console.log(data, "creation of users"));
-// userService
-//   .patchRequest(1, { id: 1, title: "title", body: "body" })
-//   .then((data) => console.log(data, "updates of users"));
-// userService
-//   .deleteRequest(1)
-//   .then((status) => console.log("status of deletion (user)", status));
+userService.getRequest().then((data) => console.log(data, "users"));
+userService
+  .postRequest({ title: "title", body: "string", userId: 0 })
+  .then((data) => console.log(data, "creation of users"));
+userService
+  .patchRequest(1, { id: 1, title: "title", body: "body" }, "PUT")
+  .then((data) => console.log(data, "updates of users"));
+userService
+  .deleteRequest(1)
+  .then((status) => console.log("status of deletion (user)", status));
 
 // ----------------------------------------------------
 class UserRealService extends Service {
@@ -96,6 +97,16 @@ class UserRealService extends Service {
 const realUserService = new UserRealService(
   "https://learning-server.onrender.com/users"
 );
+
+class TodosService extends Service {
+  constructor(url) {
+    super(url);
+  }
+}
+
+const todosService = new TodosService("https://jsonplaceholder.typicode.com/todos");
+
+todosService.getRequest().then((data) => console.log(data, "TODOS DATA") );
 
 // realUserService
 //   .postRequest({
