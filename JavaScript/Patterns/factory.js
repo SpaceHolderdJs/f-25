@@ -161,14 +161,14 @@ class Factory2 {
 
   static check = {
     A: (text) => {
-        if (typeof text !== "string") return false;
-    
-        const arrayOfText = text.split("");
-        return arrayOfText.every((el) => el === el.toUpperCase());
-      },
+      if (typeof text !== "string") return false;
+
+      const arrayOfText = text.split("");
+      return arrayOfText.every((el) => el === el.toUpperCase());
+    },
     B: (text) => text.length <= 5,
-    C: (text) => typeof text === "number"
-  }
+    C: (text) => typeof text === "number",
+  };
 
   constructor({ text }) {
     // return new Factory2.cases[
@@ -188,3 +188,26 @@ const b = new Factory2({ text: "bbbb" });
 const c = new Factory2({ text: 123 });
 
 console.log(a, b, c, "result");
+
+class Factory3 {
+  static cases = {
+    A,
+    B,
+  };
+
+  static check = {
+    A: (data) => (data.a ? true : false),
+    B: (data) => Object.values(data).every((e) => typeof e === "string"),
+  };
+
+  constructor(data) {
+    return new Factory3.cases[
+      (Factory3.check.A(data) && A.name) || (Factory3.check.B(data) && B.name)
+    ](data);
+  }
+}
+
+const a1 = new Factory3({ a: 10 });
+const b1 = new Factory3({ b: "msmsmssm", msg: "Hello"});
+
+console.log(a1, b1, "RESULTS!!!");

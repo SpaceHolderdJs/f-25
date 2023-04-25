@@ -104,9 +104,11 @@ class TodosService extends Service {
   }
 }
 
-const todosService = new TodosService("https://jsonplaceholder.typicode.com/todos");
+const todosService = new TodosService(
+  "https://jsonplaceholder.typicode.com/todos"
+);
 
-todosService.getRequest().then((data) => console.log(data, "TODOS DATA") );
+todosService.getRequest().then((data) => console.log(data, "TODOS DATA"));
 
 // realUserService
 //   .postRequest({
@@ -143,10 +145,31 @@ realUserService.getRequest().then((data) => {
   const result = [];
 
   data.users.forEach((user, index, array) => {
-      // const usersWithSameName = array.filter((u) => u.name === user.name);
-      const isUserAdded = result.find((u) => (u.name === user.name) && (u.age === user.age));
-      !isUserAdded && result.push(user);
+    // const usersWithSameName = array.filter((u) => u.name === user.name);
+    const isUserAdded = result.find(
+      (u) => u.name === user.name && u.age === user.age
+    );
+    !isUserAdded && result.push(user);
   });
 
   console.log(result, "result");
 });
+
+class ProjectService extends Service {
+  constructor(url) {
+    super(url);
+  }
+}
+
+const projectService = new ProjectService(
+  "https://learning-server.onrender.com/projects"
+);
+
+projectService.getRequest().then((data) => console.log("data!!!!", data));
+projectService
+  .postRequest({
+    name: "Project!",
+    duration: 100,
+    users: ["6435961b68dc217913867835"],
+  })
+  .then((data) => console.log("data!!!![post]", data));
