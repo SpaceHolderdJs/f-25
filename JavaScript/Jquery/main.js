@@ -1,4 +1,4 @@
-window.onload = () => {
+window.addEventListener("load", () => {
   //   const h1 = document.querySelector("h1");
   document.querySelectorAll("h2");
   //   h1.textContent = "New Text";
@@ -13,14 +13,19 @@ window.onload = () => {
 
   console.log([1, 2, 3, 4], h2Collection, "!!!!");
 
-  $("button").click(() => {
+  $("#button").click(() => {
     console.log("CLICKED");
-    $("button").fadeOut(1000).fadeIn(1000);
+    $("#button").fadeOut(1000).fadeIn(1000);
   });
 
-  $("button").dblclick(function () {
+  $("#button").dblclick(function () {
     $(this).hide();
   });
+
+  // $("button").on("click", () => {
+  //   console.log("CLICKED");
+  //   $("button").fadeOut(1000).fadeIn(1000);
+  // });
 
   //   $("body").mousemove((e) => {
   //     $("h1").offset({ left: e.pageX, top: e.pageY });
@@ -33,4 +38,4 @@ window.onload = () => {
   document.querySelector("section").onclick = () => {};
 
   console.log(window.user, "user");
-};
+});

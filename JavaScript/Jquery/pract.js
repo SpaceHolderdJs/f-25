@@ -1,4 +1,4 @@
-window.onload = () => {
+window.addEventListener("load", () => {
   let count = 0;
 
   $("#count+").click(() => {
@@ -23,4 +23,4 @@ window.onload = () => {
         .join(" ")
     );
   });
-};
+});
