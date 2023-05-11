@@ -21,6 +21,7 @@ renderSongName();
 playButton.onclick = (e) => {
   audioElement.paused ? audioElement.play() : audioElement.pause();
   e.target.textContent = audioElement.paused ? "Play" : "Stop";
+  console.log(audioElement.duration, "DURATION");
 };
 
 prevButton.onclick = () => {
