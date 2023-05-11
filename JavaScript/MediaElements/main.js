@@ -10,6 +10,14 @@ const playButton = document.querySelector("#play");
 const prevButton = document.querySelector("#prev");
 const nextButton = document.querySelector("#next");
 
+const output = document.querySelector("#output");
+
+const renderSongName = () => {
+  output.textContent = audioTracks[currentTrackIndex].split(".")[0];
+};
+
+renderSongName();
+
 playButton.onclick = (e) => {
   audioElement.paused ? audioElement.play() : audioElement.pause();
   e.target.textContent = audioElement.paused ? "Play" : "Stop";
@@ -25,6 +33,7 @@ prevButton.onclick = () => {
     currentTrackIndex = audioTracks.length - 1;
   }
   audioElement.play();
+  renderSongName();
 };
 
 nextButton.onclick = () => {
@@ -37,6 +46,7 @@ nextButton.onclick = () => {
     currentTrackIndex = 0;
   }
   audioElement.play();
+  renderSongName();
 };
 
 console.log(audioElement, "ELEMNT");
