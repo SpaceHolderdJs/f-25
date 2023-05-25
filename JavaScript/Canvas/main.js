@@ -2,44 +2,45 @@ const canvas = document.getElementsByTagName("canvas")[0];
 
 const ctx = canvas.getContext("2d");
 
-ctx.rect(100, 5, 50, 50);
-ctx.arc(200, 80, 10, 20, 40);
-// ctx.fillRect(100, 100, 40, 40);
+// ctx.rect(100, 5, 50, 50);
+// ctx.arc(200, 80, 10, 20, 40);
+// // ctx.fillRect(100, 100, 40, 40);
 
-console.log(ctx, "!!!");
+// console.log(ctx, "!!!");
 
-ctx.fill();
+// ctx.fill();
 
-ctx.beginPath();
-ctx.strokeStyle = "blue";
-ctx.lineWidth = 10;
-ctx.moveTo(10, 20);
-ctx.lineTo(10, 50);
-ctx.closePath();
-ctx.stroke();
+// ctx.beginPath();
+// ctx.strokeStyle = "blue";
+// ctx.lineWidth = 10;
+// ctx.moveTo(10, 20);
+// ctx.lineTo(10, 50);
+// ctx.closePath();
+// ctx.stroke();
 
-ctx.beginPath();
-ctx.lineWidth = 5;
-ctx.moveTo(10, 20);
-ctx.strokeStyle = "red";
-ctx.lineTo(50, 80);
-ctx.closePath();
-ctx.stroke();
+// ctx.beginPath();
+// ctx.lineWidth = 5;
+// ctx.moveTo(10, 20);
+// ctx.strokeStyle = "red";
+// ctx.lineTo(50, 80);
+// ctx.closePath();
+// ctx.stroke();
 
-const words = ["Hello world", "Hello all", "Hello"];
+// const words = ["Hello world", "Hello all", "Hello"];
 
-words.forEach((word, i) => {
-  ctx.fillText(word, 30, 10 + i * 20);
-});
+// words.forEach((word, i) => {
+//   ctx.fillText(word, 30, 10 + i * 20);
+// });
 
 for (let i = 0; i < 10; i++) {
   setInterval(() => {
-    ctx.fillRect(10 + i * 10, 10 + i * 10, 10, 10);
+    const isOdd = i % 2;
+    ctx.fillRect(10 + i * 10, isOdd ? 10 : 20, 10, 10);
   }, 500);
 }
 
-ctx.font = "50px";
-ctx.fillText("Hello all!!!", 50, 100);
+// ctx.font = "50px";
+// ctx.fillText("Hello all!!!", 50, 100);
 
 ctx.fill();
 
