@@ -1,5 +1,5 @@
 class App {
-  static API_KEY = "2ecc6a18f1msh149a8c93469a116p1ff3e3jsn92ea038f0326";
+  static API_KEY = "417a5eb3d1mshed972e378934e9ap106f51jsn2f50fcd2d0fc";
   static SEARCH_URL =
     "https://online-movie-database.p.rapidapi.com/auto-complete?q=";
 
@@ -8,15 +8,22 @@ class App {
     "X-RapidAPI-Host": "online-movie-database.p.rapidapi.com",
   };
 
-  static button = document.querySelector("button");
+  static searchButton = document.querySelector("#search-button");
   static input = document.querySelector("input");
   static output = document.querySelector("section");
+
+  static watchListSwitcher = document.querySelector("#watch-list-switcher");
+  static watchListOutput = document.querySelector("#watchList");
+  static watchListRandomButton = document.querySelector("#random-film-button");
 
   constructor(data = [], watchList = []) {
     this.data = data;
     this.watchList = watchList;
 
-    App.button.onclick = () => this.onButtonClick();
+    App.searchButton.onclick = () => this.onButtonClick();
+    App.watchListSwitcher.onclick = () => this.renderWatchlist();
+    App.watchListRandomButton.onclick = () =>
+      console.log(this.getRandomFilm(), "!!!!");
   }
 
   onInputChange() {}
@@ -46,7 +53,39 @@ class App {
     }
   }
 
-  renderData(dataToRender, outputElement = App.output) {
+  getRandomFilm() {
+    const watchList = this.getWatchListData();
+    return watchList[Math.floor(Math.random() * watchList.length)];
+  }
+
+  getWatchListData() {
+    return JSON.parse(localStorage.getItem("watchList") || "[]");
+  }
+
+  addWatchlistData(film) {
+    const oldWatchList = this.getWatchListData();
+    localStorage.setItem("watchList", JSON.stringify([...oldWatchList, film]));
+  }
+
+  removeWatchListData(id) {
+    const oldWatchList = this.getWatchListData();
+    localStorage.setItem(
+      "watchList",
+      JSON.stringify([...oldWatchList].filter((film) => film.id !== id))
+    );
+  }
+
+  checkIfWathclistContainsFilm(id) {
+    return this.getWatchListData().find((film) => film.id === id)
+      ? true
+      : false;
+  }
+
+  renderData(
+    dataToRender,
+    outputElement = App.output,
+    isUsingAsWatchList = false
+  ) {
     outputElement.innerHTML = "";
 
     dataToRender.forEach((film) => {
@@ -67,17 +106,48 @@ class App {
         height: 1000,
       };
 
+      const isFilmAddedToWatchList = this.checkIfWathclistContainsFilm(id);
+
       outputElement.innerHTML += `<div class="film-elem">
         <img src="${imageUrl}" />
         <h3>${title}</h3>
         <span>Rating: ${rank}</span>
         <span>Actors: ${actors}</span>
         <span>Year: ${year || "unknown"}</span>
+        <button class="film-button">${
+          isFilmAddedToWatchList ? "DeleteFromWatchList" : "AddToWatchLater"
+        }</button>
       </div>`;
+    });
+
+    const filmsButtons = document.querySelectorAll(".film-button");
+    [...filmsButtons].forEach((btn, i) => {
+      btn.onclick = () => {
+        const currentFilm = dataToRender[i];
+
+        if (this.checkIfWathclistContainsFilm(currentFilm.id)) {
+          this.removeWatchListData(currentFilm.id);
+
+          isUsingAsWatchList &&
+            this.renderData(this.getWatchListData(), App.watchListOutput, true);
+
+          btn.textContent = "AddToWatchLater";
+        } else {
+          this.addWatchlistData(currentFilm);
+          btn.textContent = "DeleteFromWatchList";
+        }
+      };
     });
   }
 
-  renderWatchlist() {}
+  renderWatchlist() {
+    App.output.style.visibility = "hidden";
+    App.watchListOutput.style.visibility = "visible";
+
+    const watchListData = this.getWatchListData();
+
+    this.renderData(watchListData, App.watchListOutput, true);
+  }
 }
 
 new App();
