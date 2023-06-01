@@ -16,17 +16,63 @@ class App {
   static watchListOutput = document.querySelector("#watchList");
   static watchListRandomButton = document.querySelector("#random-film-button");
 
+  static SECTIONS = {
+    main: "main",
+    filmList: "filmList",
+  };
+
   constructor(data = [], watchList = []) {
     this.data = data;
     this.watchList = watchList;
+    this.currentSection = App.SECTIONS.main;
 
     App.searchButton.onclick = () => this.onButtonClick();
-    App.watchListSwitcher.onclick = () => this.renderWatchlist();
-    App.watchListRandomButton.onclick = () =>
-      console.log(this.getRandomFilm(), "!!!!");
+
+    App.watchListSwitcher.onclick = () =>
+      this.currentSection === App.SECTIONS.main
+        ? this.renderWatchlist()
+        : this.renderMainView();
+
+    App.watchListRandomButton.onclick = () => {
+      // turning border color back to normal
+      [...document.querySelectorAll(".film-elem")].forEach((el) => {
+        if (this.checkIfWathclistContainsFilm(el.id)) {
+          el.style.border = "1px solid palevioletred";
+        } else {
+          el.style.border = "1px solid white";
+        }
+      });
+
+      const randomFilmData =
+        this.getRandomFilm(
+          this.currentSection === App.SECTIONS.main
+            ? this.data
+            : this.getWatchListData()
+        ) || null;
+
+      if (!randomFilmData) return alert("There is no random film");
+
+      const randomFilmElement = document.querySelector(`#${randomFilmData.id}`);
+
+      randomFilmElement.style.border = "1px solid lime";
+
+      randomFilmElement.scrollIntoView({ behavior: "smooth" });
+    };
+
+    App.input.oninput = (e) => this.onInputChange(e);
   }
 
-  onInputChange() {}
+  onInputChange(e) {
+    if (this.currentSection === App.SECTIONS.filmList) {
+      const films = this.getWatchListData();
+
+      const filteredFilms = films.filter(({ l }) =>
+        l.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+
+      this.renderData(filteredFilms, App.watchListOutput, true);
+    }
+  }
 
   //start search
   onButtonClick() {
@@ -53,9 +99,8 @@ class App {
     }
   }
 
-  getRandomFilm() {
-    const watchList = this.getWatchListData();
-    return watchList[Math.floor(Math.random() * watchList.length)];
+  getRandomFilm(films) {
+    return films[Math.floor(Math.random() * films.length)];
   }
 
   getWatchListData() {
@@ -108,15 +153,19 @@ class App {
 
       const isFilmAddedToWatchList = this.checkIfWathclistContainsFilm(id);
 
-      outputElement.innerHTML += `<div class="film-elem">
+      outputElement.innerHTML += `<div id="${id}" class="film-elem ${
+        isFilmAddedToWatchList ? "watch-list-film" : ""
+      }">
         <img src="${imageUrl}" />
         <h3>${title}</h3>
         <span>Rating: ${rank}</span>
         <span>Actors: ${actors}</span>
         <span>Year: ${year || "unknown"}</span>
-        <button class="film-button">${
-          isFilmAddedToWatchList ? "DeleteFromWatchList" : "AddToWatchLater"
-        }</button>
+        <div class="btn-wrapper">
+          <button class="film-button">${
+            isFilmAddedToWatchList ? "DeleteFromWatchList" : "AddToWatchLater"
+          }</button>
+        </div>
       </div>`;
     });
 
@@ -131,9 +180,11 @@ class App {
           isUsingAsWatchList &&
             this.renderData(this.getWatchListData(), App.watchListOutput, true);
 
+          // DZ task ->
           btn.textContent = "AddToWatchLater";
         } else {
           this.addWatchlistData(currentFilm);
+          // DZ task ->
           btn.textContent = "DeleteFromWatchList";
         }
       };
@@ -141,12 +192,27 @@ class App {
   }
 
   renderWatchlist() {
-    App.output.style.visibility = "hidden";
-    App.watchListOutput.style.visibility = "visible";
+    App.output.style.display = "none";
+    App.watchListOutput.style.display = "flex";
+    App.searchButton.style.display = "none";
+
+    App.watchListSwitcher.textContent = "Go to main page";
+
+    this.currentSection = App.SECTIONS.filmList;
 
     const watchListData = this.getWatchListData();
 
     this.renderData(watchListData, App.watchListOutput, true);
+  }
+
+  renderMainView() {
+    App.output.style.display = "flex";
+    App.watchListOutput.style.display = "none";
+    App.searchButton.style.display = "inline-block";
+
+    App.watchListSwitcher.textContent = "Go to watch list";
+
+    this.currentSection = App.SECTIONS.main;
   }
 }
 
