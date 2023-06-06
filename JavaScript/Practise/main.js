@@ -162,14 +162,18 @@ class App {
         <span>Actors: ${actors}</span>
         <span>Year: ${year || "unknown"}</span>
         <div class="btn-wrapper">
-          <button class="film-button">${
-            isFilmAddedToWatchList ? "DeleteFromWatchList" : "AddToWatchLater"
-          }</button>
+          <button id="btn-${id}" class="film-button">${
+        isFilmAddedToWatchList ? "DeleteFromWatchList" : "AddToWatchLater"
+      }</button>
         </div>
       </div>`;
     });
 
-    const filmsButtons = document.querySelectorAll(".film-button");
+    const filmsButtons =
+      this.currentSection === App.SECTIONS.main
+        ? App.output.querySelectorAll(".film-button")
+        : App.watchListOutput.querySelectorAll(".film-button");
+
     [...filmsButtons].forEach((btn, i) => {
       btn.onclick = () => {
         const currentFilm = dataToRender[i];
@@ -182,10 +186,29 @@ class App {
 
           // DZ task ->
           btn.textContent = "AddToWatchLater";
+
+          const buttonFromMain = App.output.querySelector(`#${btn.id}`);
+          const buttonFromWatchList = App.watchListOutput.querySelector(
+            `#${btn.id}`
+          );
+
+          if (buttonFromMain) buttonFromMain.textContent = "AddToWatchLater";
+          if (buttonFromWatchList)
+            buttonFromWatchList.textContent = "AddToWatchLater";
         } else {
           this.addWatchlistData(currentFilm);
           // DZ task ->
           btn.textContent = "DeleteFromWatchList";
+
+          const buttonFromMain = App.output.querySelector(`#${btn.id}`);
+          const buttonFromWatchList = App.watchListOutput.querySelector(
+            `#${btn.id}`
+          );
+
+          if (buttonFromMain)
+            buttonFromMain.textContent = "DeleteFromWatchList";
+          if (buttonFromWatchList)
+            buttonFromWatchList.textContent = "DeleteFromWatchList";
         }
       };
     });
