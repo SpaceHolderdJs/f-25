@@ -6,11 +6,21 @@ export class HTMLConstructor {
     this.content = content;
   }
 
+  generateFoldersFromPath(path) {
+    if (!path.includes("/")) return path;
+
+    const pathItems = path.split("/");
+    console.log(pathItems, "!!!");
+
+    // написати цикл що створить всі папки з масиву pathItems
+    // !fs.existsSync(path) && fs.mkdirSync(path);
+  }
+
   generateFile(path = "") {
     // опишіть логіку створення HTML файлу на базу його назви і контенту
 
     if (path) {
-      !fs.existsSync(path) && fs.mkdirSync(path);
+      this.generateFoldersFromPath(path);
     }
 
     fs.writeFileSync(

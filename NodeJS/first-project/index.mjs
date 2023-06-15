@@ -29,6 +29,7 @@ function main(data) {
     countriesLayouts.join("")
   );
 
+  htmlConstructor.generateFile("html/files/basic/");
   htmlConstructor.generateFile("");
 }
 
