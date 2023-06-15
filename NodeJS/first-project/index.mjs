@@ -26,11 +26,18 @@ function main(data) {
 
   const htmlConstructor = new HTMLConstructor(
     "countries",
-    countriesLayouts.join("")
+    countriesLayouts.join(""),
+    `
+      div {
+        border: 1px solid black;
+        margin: 5px;
+        padding: 5px;
+      }
+    `
   );
 
-  htmlConstructor.generateFile("html/files/basic/");
-  htmlConstructor.generateFile("");
+  htmlConstructor.generateFile("html");
+  // htmlConstructor.generateFile("");
 }
 
 main(data);
