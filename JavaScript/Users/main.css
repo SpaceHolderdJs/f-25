@@ -39,3 +39,8 @@ input, button {
 .m-5 {
     margin: 5px;
 }
+
+input {
+    outline: none;
+}
+

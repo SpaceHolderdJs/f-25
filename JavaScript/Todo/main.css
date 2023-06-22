@@ -1,0 +1,35 @@
+
+body * {
+    font-size: 30px;
+}
+
+.todo {
+    border: 1px solid black;
+    margin: 5px 0;
+    transition: 0.3s all;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.done {
+    opacity: 0.5;
+}
+
+.undone {
+    border: 1px solid red;
+}
+
+.user-todos-button {
+    margin: 5px;
+    background: grey;
+}
+
+.active-user-button {
+    background: lightskyblue;
+}
+
+input {
+    margin: 5px;
+}
