@@ -1,0 +1,10 @@
+<div class="user-item" *ngIf="user">
+  <p>{{ user.name }}</p>
+  <p>{{ user.age }}</p>
+
+  <div *ngFor="let location of user.locations">
+    <p>{{ location.title }}</p>
+    <span>{{ location.lat }}</span>
+  </div>
+  <button (click)="showUserData()">Show user</button>
+</div>
