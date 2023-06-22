@@ -1,0 +1,8 @@
+<h3>Users</h3>
+
+<input type="text" [value]="searchValue" (input)="onInput($event)" />
+
+<app-user
+  *ngFor="let user of searchValue ? searchResult : users"
+  [user]="user"
+></app-user>
