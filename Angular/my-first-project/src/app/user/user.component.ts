@@ -8,8 +8,14 @@ import { UserInterface } from 'src/types';
 })
 export class UserComponent {
   @Input() user: UserInterface | null = null;
+  isUserDataEditing: boolean = false;
 
   showUserData() {
     console.log(this.user, "USER");
   }
+
+  toggleIsUserDataEditing() {
+    this.isUserDataEditing = !this.isUserDataEditing;
+  }
+
 }
