@@ -1,5 +1,4 @@
 <div class="user-item" *ngIf="user">
-  
   <div *ngIf="!isUserDataEditing">
     <p>{{ user.name }}</p>
     <p>{{ user.email }}</p>
@@ -7,7 +6,11 @@
     <p>{{ user.address.street }}</p>
   </div>
 
-  <app-user-edit-form *ngIf="isUserDataEditing"></app-user-edit-form>
+  <app-user-edit-form
+    *ngIf="isUserDataEditing"
+    [user]="user"
+    [editFields]="['name', 'email', 'phone']"
+  ></app-user-edit-form>
 
   <button (click)="toggleIsUserDataEditing()">Edit</button>
 

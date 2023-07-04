@@ -1,1 +1,8 @@
-<p>user-edit-form works!</p>
+<div class="form" *ngIf="user">
+  <input
+    *ngFor="let field of editFields"
+    [name]="field"
+    [placeholder]="field"
+    [value]="user[field]"
+  />
+</div>
