@@ -1,14 +1,33 @@
-export interface LocationInterface {
-    title: string,
-    lat: number,
-    lon: number
+export interface UserInterface {
+    id: number;
+    name: string;
+    username: string;
+    email: string;
+    phone: string;
+    website: string;
+    address: AddressInterface;
+    geo: GeoInterface;
+    company: CompanyIntreface;
 }
 
-export interface UserInterface {
-    name: string,
-    age: number,
-    locations: Array<LocationInterface>
+export interface AddressInterface {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
 }
+
+export interface GeoInterface {
+    lat: number;
+    lng: number;
+}
+
+export interface CompanyIntreface {
+    name: string;
+    catchPhrase: string;
+    bs: string;
+}
+
 
 
 // interface AInterface {
