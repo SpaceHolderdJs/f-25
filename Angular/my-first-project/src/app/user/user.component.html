@@ -9,7 +9,7 @@
   <app-user-edit-form
     *ngIf="isUserDataEditing"
     [user]="user"
-    [editFields]="['name', 'email', 'phone']"
+    [editFields]="['name', 'email', 'phone', 'address']"
   ></app-user-edit-form>
 
   <button (click)="toggleIsUserDataEditing()">Edit</button>
