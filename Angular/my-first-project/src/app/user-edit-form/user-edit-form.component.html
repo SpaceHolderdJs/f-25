@@ -3,6 +3,7 @@
     *ngFor="let field of editFields"
     [name]="field"
     [placeholder]="field"
-    [value]="user[field]"
+   
+    (input)="onInput($event)"
   />
 </div>

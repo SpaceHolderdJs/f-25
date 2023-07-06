@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserInterface } from 'src/types';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-users',
@@ -8,24 +9,15 @@ import { UserInterface } from 'src/types';
 })
 export class UsersComponent implements OnInit {
   searchValue: string = '';
-  searchResult: Array<UserInterface> = [];
+
+  constructor(public usersService: UsersService) { }
 
   ngOnInit() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(json => this.users = json);
+    this.usersService.getUsers();
   }
-
-  users: Array<UserInterface> = [];
 
   onInput(event: any) {
     this.searchValue = event.target.value;
-
-    this.searchResult = this.users.filter(
-      (user) =>
-        user.name.includes(event.target.value)
-    );
-
-    console.log('Input', event.target.value, this.searchResult);
+    this.usersService.searchUsers(this.searchValue, ["name", "email", "phone"]);
   }
 }
