@@ -9,6 +9,7 @@ import { UsersService } from '../users.service';
 })
 export class UsersComponent implements OnInit {
   searchValue: string = '';
+  isSorted: boolean = false;
 
   constructor(public usersService: UsersService) { }
 
@@ -19,5 +20,9 @@ export class UsersComponent implements OnInit {
   onInput(event: any) {
     this.searchValue = event.target.value;
     this.usersService.searchUsers(this.searchValue, ["name", "email", "phone"]);
+  }
+
+  onSortClick() {
+    this.isSorted = !this.isSorted;
   }
 }

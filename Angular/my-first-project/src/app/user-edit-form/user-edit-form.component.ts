@@ -1,23 +1,48 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AddressInterface, CompanyIntreface, GeoInterface, UserInterface } from 'src/types';
+import {
+  AddressInterface,
+  CompanyInterface,
+  GeoInterface,
+  UserInterface,
+} from 'src/types';
 import { UsersService } from '../users.service';
+import { execlude } from 'src/utils/object';
 
-type UnionUserType = keyof UserInterface | keyof AddressInterface | keyof GeoInterface | keyof CompanyIntreface
+type UnionUserType =
+  | keyof Omit<UserInterface, 'address' | 'company'>
+  | keyof Omit<AddressInterface, 'geo'>
+  | keyof GeoInterface
+  | keyof CompanyInterface;
+
+type MergedUserType = Omit<UserInterface, 'address' | 'company'> &
+  Omit<AddressInterface, 'geo'> &
+  GeoInterface &
+  CompanyInterface;
 
 @Component({
   selector: 'app-user-edit-form',
   templateUrl: './user-edit-form.component.html',
-  styleUrls: ['./user-edit-form.component.css']
+  styleUrls: ['./user-edit-form.component.css'],
 })
 export class UserEditFormComponent implements OnInit {
   @Input() user: UserInterface | null = null;
   @Input() editFields: Array<UnionUserType> = [];
 
+  mergedUser: MergedUserType | null = null;
+
   constructor(public usersService: UsersService) { }
 
   ngOnInit() {
-    this.editFields = this.editFields.map((key) => this.getDataFromUserFields(key)).flat() as any;
+    this.editFields = this.editFields
+      .map((key) => this.getDataFromUserFields(key))
+      .flat() as any;
 
+    this.mergedUser = {
+      ...execlude(this.user, ['address', 'company']),
+      ...execlude(this.user!.address, ['geo']),
+      ...this.user!.address.geo,
+      ...this.user!.company
+    };
   }
 
   onInput(event: Event) {
@@ -25,20 +50,29 @@ export class UserEditFormComponent implements OnInit {
     const inputName = input.name as keyof UserInterface;
 
     this.user![inputName] = input.value as never;
-    console.log("USER", this.user);
-    console.log("USERS", this.usersService.users);
+    console.log('USER', this.user);
+    console.log('USERS', this.usersService.users);
   }
 
   getDataFromUserFields(key: UnionUserType) {
     const value = this.user![key as keyof UserInterface] || null;
 
-    if (value && typeof value === "object") {
+    if (value && typeof value === 'object') {
       return Object.keys(value);
     }
 
     return key;
   }
 
-  // TODO: Finish getting of user fields
-  getFieldUserData() { }
+  getFieldUserData(key: string) {
+
+    return (
+      this.user![key as keyof UserInterface] ||
+      (typeof this.user!.address[key as keyof AddressInterface] !== 'object'
+        ? this.user!.address[key as keyof AddressInterface]
+        : this.user!.address.geo[key as keyof GeoInterface]) ||
+      // this.user!.address.geo[key as keyof GeoInterface] ||
+      this.user!.company[key as keyof CompanyInterface]
+    );
+  }
 }

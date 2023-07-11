@@ -6,8 +6,7 @@ export interface UserInterface {
     phone: string;
     website: string;
     address: AddressInterface;
-    geo: GeoInterface;
-    company: CompanyIntreface;
+    company: CompanyInterface;
 }
 
 export interface AddressInterface {
@@ -15,6 +14,7 @@ export interface AddressInterface {
     suite: string;
     city: string;
     zipcode: string;
+    geo: GeoInterface;
 }
 
 export interface GeoInterface {
@@ -22,7 +22,7 @@ export interface GeoInterface {
     lng: number;
 }
 
-export interface CompanyIntreface {
+export interface CompanyInterface {
     name: string;
     catchPhrase: string;
     bs: string;
