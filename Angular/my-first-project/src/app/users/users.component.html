@@ -1,8 +1,8 @@
 <h3>Users</h3>
 
 <input type="text" [value]="searchValue" (input)="onInput($event)" />
-<button *ngIf="!isSorted" (click)="onSortClick()" class="btn btn-danger">Alphabetic Sort</button>
-<button *ngIf="isSorted" (click)="onSortClick()" class="btn btn-danger">Reversed Sort</button>
+<button *ngIf="!isSorted" (click)="onSortClick()" class="btn btn-danger m-1">Alphabetic Sort</button>
+<button *ngIf="isSorted" (click)="onSortClick()" class="btn btn-danger m-1">Reversed Sort</button>
 
 <div class="users-wrapper">
   <app-user
