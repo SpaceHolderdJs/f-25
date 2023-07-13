@@ -6,7 +6,7 @@ import {
   UserInterface,
 } from 'src/types';
 import { UsersService } from '../users.service';
-import { execlude } from 'src/utils/object';
+import { execlude, set } from 'src/utils/object';
 
 type UnionUserType =
   | keyof Omit<UserInterface, 'address' | 'company'>
@@ -49,9 +49,10 @@ export class UserEditFormComponent implements OnInit {
     const input = event.target! as HTMLInputElement;
     const inputName = input.name as keyof UserInterface;
 
-    this.user![inputName] = input.value as never;
+    // this.user![inputName] = input.value as never;
+    set(this.user, inputName, input.value);
+
     console.log('USER', this.user);
-    console.log('USERS', this.usersService.users);
   }
 
   getDataFromUserFields(key: UnionUserType) {

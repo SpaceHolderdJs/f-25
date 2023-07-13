@@ -1,12 +1,16 @@
 <h3>Users</h3>
 
 <input type="text" [value]="searchValue" (input)="onInput($event)" />
-<button *ngIf="!isSorted" (click)="onSortClick()">Sort</button>
-<button *ngIf="isSorted" (click)="onSortClick()">Cancel Sort</button>
+<button *ngIf="!isSorted" (click)="onSortClick()" class="btn btn-danger">Alphabetic Sort</button>
+<button *ngIf="isSorted" (click)="onSortClick()" class="btn btn-danger">Reversed Sort</button>
 
 <div class="users-wrapper">
-<app-user
-  *ngFor="let user of searchValue ? usersService.searchResult : isSorted ? usersService.sortedUsers : usersService.users"
-  [user]="user"
-></app-user>
+  <app-user
+    *ngFor="
+      let user of searchValue
+        ? usersService.searchResult
+        : usersService.sortedUsers
+    "
+    [user]="user"
+  ></app-user>
 </div>

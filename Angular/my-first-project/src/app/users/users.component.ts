@@ -24,5 +24,6 @@ export class UsersComponent implements OnInit {
 
   onSortClick() {
     this.isSorted = !this.isSorted;
+    this.usersService.sortUsers(this.isSorted);
   }
 }

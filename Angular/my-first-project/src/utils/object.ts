@@ -6,3 +6,20 @@ export const execlude = (object: any, fieldsToRemove: any[]) => {
 
     return newObject;
 }
+
+export const set = (object: any, key: string, value: any) => {
+
+    for (let objectKey in object) {
+
+        if (typeof object[objectKey] === "object") {
+            set(object[objectKey], key, value);
+        } else {
+            if (key === objectKey) {
+                object[key] = value;
+            }
+        }
+
+    }
+
+    return object;
+}
