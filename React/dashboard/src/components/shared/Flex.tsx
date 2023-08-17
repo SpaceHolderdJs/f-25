@@ -8,6 +8,7 @@ interface FlexPropsInterface {
   justifyContent?: string;
   alignItems?: string;
   background?: string;
+  gap?: string;
 }
 
 export const Flex = styled.div<FlexPropsInterface>`
@@ -20,6 +21,7 @@ export const Flex = styled.div<FlexPropsInterface>`
   justify-content: ${(props) => props.justifyContent || "start"};
   align-items: ${(props) => props.alignItems || "start"};
   background: ${(props) => props.background || "none"};
+  gap: ${(props) => props.gap || "none"}
 `;
 
 export const FlexRow = styled(Flex)`
