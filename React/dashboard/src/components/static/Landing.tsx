@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FlexColumn, FlexRow } from "../shared/Flex";
+import { StyledLink } from "../shared/Link";
 
 export const Landing = () => {
   return (
@@ -13,7 +14,7 @@ export const Landing = () => {
         alignItems="center"
         className="landing-header"
       >
-        <Link to="/login">Login</Link>
+        <StyledLink to="/login">Login</StyledLink>
       </FlexRow>
     </FlexColumn>
   );

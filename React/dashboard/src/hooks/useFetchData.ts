@@ -15,7 +15,7 @@ export const useFetchData = <TData>(url: string, options: RequestInit) => {
                 setIsLoading(false)
                 setData(null)
             })
-    }, [])
+    }, [url, options])
 
     return { data, isLoading };
 }
