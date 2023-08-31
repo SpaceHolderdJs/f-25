@@ -12,7 +12,9 @@ function App() {
     <FlexColumn width="100%">
       <DashboardContextProvider>
         <SearchContextProvider>
+
           <RouterProvider router={router} />
+          
         </SearchContextProvider>
       </DashboardContextProvider>
     </FlexColumn>
