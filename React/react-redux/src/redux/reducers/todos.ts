@@ -10,7 +10,7 @@ export const todosReducer = (todos: TodoInteface[] = [], action: ReduxActionInte
             return todos.map((todo) => todo.id === action.payload.id ? action.payload : todo);
 
         case "DELETE_TODO":
-            // H/W finish deletment of todo
+            // H/W finish deletment of todo !imutable
             return todos
 
         default:
