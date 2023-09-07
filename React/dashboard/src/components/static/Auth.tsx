@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FlexColumn } from "../shared/Flex";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
@@ -6,26 +6,31 @@ import { DashboardContext } from "../../contexts/DashboardContext";
 
 export const Auth = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [_, setLocalStorageFormData] =
+  const [_, setLocalStorageFormData, setLocalStorageItem] =
     useLocalStorage("userData");
 
   const navigate = useNavigate();
 
-  const {setUser} = useContext(DashboardContext)!;
+  const { setUser } = useContext(DashboardContext)!;
 
   const onSubmit = () => {
     //check password and email
 
-    if (formData.email === 'admin' && formData.password === 'admin') {
-      setLocalStorageFormData(formData);
+    if (formData.email === "admin" && formData.password === "admin") {
       setUser(formData);
-      navigate('/dashboard');
+      setLocalStorageItem(formData);
+      navigate("/dashboard");
     } else {
-      alert("Wrong data")
+      alert("Wrong data");
     }
-
-    setFormData({ email: "", password: "" });
   };
+
+  // useEffect(() => {
+  //   return () => {
+  //     console.log("!!!Unmount");
+  //     setLocalStorageItem(formData)
+  //   };
+  // }, [formData, setLocalStorageItem]);
 
   return (
     <FlexColumn width="100%" alignItems="center" gap="10px">
