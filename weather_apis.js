@@ -31,7 +31,19 @@ function WeatherApiDotCom(city, days) {
 
   fetch(url, options)
     .then((res) => res.json())
-    .then((data) => console.log(data, "WeatherApiDotCom"))
+    .then((data) => {
+      // const result = data.forecast.forecastday.map((d) => {
+      //   console.log(d, "DAY");
+
+      //   for (let key in d.day) {
+      //     console.log(key, d.day[key], "day item");
+      //     return `<h1>${key}:${d.day[key]}</h1>`;
+      //   }
+      // });
+
+      // console.log(result, "render Result");
+      console.log(data, "WeatherApiDotCom");
+    })
     .catch((err) => console.error(err, "Error with WeatherApiDotCom"));
 }
 
