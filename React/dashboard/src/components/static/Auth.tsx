@@ -3,11 +3,12 @@ import { FlexColumn } from "../shared/Flex";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { DashboardContext } from "../../contexts/DashboardContext";
+import { UserInterface } from "../../types";
 
 export const Auth = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [_, setLocalStorageFormData, setLocalStorageItem] =
-    useLocalStorage("userData");
+    useLocalStorage<UserInterface | string | undefined>("userData");
 
   const navigate = useNavigate();
 
