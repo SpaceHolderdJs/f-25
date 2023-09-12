@@ -1,15 +1,20 @@
-import React, { useRef } from 'react'
+import React, { useRef, PropsWithChildren, FC } from 'react'
 
-export const Settings = () => {
+interface Props extends PropsWithChildren {
+  
+}
+
+export const Settings: FC<Props> = ({ children }) => {
   //REF
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const divRef = useRef<HTMLDivElement | null>(null);
 
   const data = {data: "Hello"}
 
+  // not proper way (but works)
   const dataRef = useRef<{data: string}>({data: "Hello"});
 
-  console.log(divRef, "divRef");
+  console.log(divRef, dataRef.current, "divRef");
 
   const onClick = () => {
     // default DOM way

@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
 
-export const useLocalStorage = (key: string) => {
-    const [localStorageData, setLocalStorageData] = useState(JSON.parse(localStorage.getItem(key) || 'null'));
+export const useLocalStorage = <TLSData>(key: string) => {
+    const [localStorageData, setLocalStorageData] = useState<TLSData>(JSON.parse(localStorage.getItem(key) || 'null'));
 
-    const setLocalStorageItem = useCallback((data: any) => {
+    const setLocalStorageItem = useCallback((data: TLSData) => {
         localStorage.setItem(key, JSON.stringify(data))
     }, [key]);
 
@@ -12,5 +12,5 @@ export const useLocalStorage = (key: string) => {
         setLocalStorageItem(localStorageData);
     }, [localStorageData, setLocalStorageItem]);
 
-    return [localStorageData, setLocalStorageData, setLocalStorageItem];
+    return [localStorageData, setLocalStorageData, setLocalStorageItem] as [TLSData, Dispatch<SetStateAction<TLSData>>, (data: TLSData) => void];
 }
